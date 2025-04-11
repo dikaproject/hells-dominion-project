@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hells Dominion | Ranks</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary-color: #d81921;
+            --secondary-color: #860008;
+            --accent-color: #ff6600;
+            --dark-color: #1a0000;
+            --light-color: #fff1e6;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-color);
+            color: var(--light-color);
+        }
+
+        .cinzel {
+            font-family: 'Cinzel Decorative', cursive;
+        }
+
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: 2px solid var(--accent-color);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(255, 102, 0, 0.3);
+        }
+
+        .glow {
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #ff6600, 0 0 10px #ff6600, 0 0 15px rgba(0,0,0,0.8);
+            }
+            to {
+                text-shadow: 0 0 10px #ff6600, 0 0 20px #ff6600, 0 0 30px #ff6600, 0 0 15px rgba(0,0,0,0.8);
+            }
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://api/placeholder/1200/800');
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+            background-attachment: fixed;
+        }
+
+        .rank-badge {
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .rank-badge:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(255, 102, 0, 0.1);
+        }
+
+        .rank-feature {
+            padding: 0.3rem 0;
+            position: relative;
+        }
+
+        .rank-feature.included::before {
+            content: "✓";
+            position: absolute;
+            left: -1.5rem;
+            color: #10b981;
+        }
+
+        .rank-feature.excluded::before {
+            content: "×";
+            position: absolute;
+            left: -1.5rem;
+            color: #ef4444;
+        }
+        
+        @keyframes spin-slow {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .animate-spin-slow {
+            animation: spin-slow 4s linear infinite;
+        }
+
+        .floating {
+            animation: float 3s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Loading animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--dark-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loader.fade {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        .loader-icon {
+            width: 100px;
+            height: 100px;
+            border: 5px solid transparent;
+            border-top: 5px solid var(--primary-color);
+            border-right: 5px solid var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .btn-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 99;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-float.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .btn-float:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-black via-red-950/10 to-black">
+    <!-- Loading Screen -->
+    <div class="loader">
+        <div class="loader-content">
+            <div class="loader-icon"></div>
+            <h2 class="cinzel text-2xl text-red-600">Loading <span class="text-amber-500">Hells Dominion</span></h2>
+        </div>
+    </div>
+
+    <!-- Scroll to top button -->
+    <div class="btn-float" id="scrollTop">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-black/80 backdrop-blur-md fixed w-full z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="https://api/placeholder/50/50" alt="Hells Dominion Logo" class="w-12 h-12 mr-3">
+                <a href="index.html" class="cinzel text-2xl md:text-3xl font-bold text-red-600">Hells <span class="text-amber-500">Dominion</span></a>
+            </div>
+            
+            <!-- Mobile menu button -->
+            <button id="menu-toggle" class="md:hidden text-white focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+            
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="nav-link text-white hover:text-red-500 font-medium">Home</a>
+                <a href="ranks.html" class="nav-link text-red-500 font-medium">Ranks</a>
+                <a href="bundle.html" class="nav-link text-white hover:text-red-500 font-medium">Bundles</a>
+                <a href="payment.html" class="nav-link text-white hover:text-red-500 font-medium">Payment</a>
+                <a href="https://discord.gg/" target="_blank" class="flex items-center space-x-2 bg-indigo-700 hover:bg-indigo-600 px-4 py-2 rounded-lg transition-all">
+                    <i class="fab fa-discord"></i>
+                    <span>Join Discord</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-black/90 backdrop-blur-md w-full">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-4">
+                <a href="index.html" class="text-white hover:text-red-500 font-medium py-2 border-b border-gray-800">Home</a>
+                <a href="ranks.html" class="text-red-500 font-medium py-2 border-b border-gray-800">Ranks</a>
+                <a href="bundle.html" class="text-white hover:text-red-500 font-medium py-2 border-b border-gray-800">Bundles</a>
+                <a href="payment.html" class="text-white hover:text-red-500 font-medium py-2 border-b border-gray-800">Payment</a>
+                <a href="https://discord.gg/" target="_blank" class="flex items-center justify-center space-x-2 bg-indigo-700 hover:bg-indigo-600 px-4 py-2 rounded-lg transition-all">
+                    <i class="fab fa-discord"></i>
+                    <span>Join Discord</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="pt-24 pb-12 md:pt-32 md:pb-16 relative">
+        <div class="hero-background opacity-30"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/50 to-black/90 z-0"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="flex flex-col items-center text-center" data-aos="fade-up" data-aos-duration="1000">
+                <h1 class="cinzel text-4xl md:text-5xl lg:text-6xl font-bold mb-4 glow">
+                    Server <span class="text-red-600 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">Ranks</span>
+                </h1>
+                <p class="text-xl max-w-3xl mb-4">Choose your path to power in the underworld. Our exclusive ranks grant you special abilities and privileges.</p>
+                <div class="w-24 h-1 bg-gradient-to-r from-red-700 to-amber-500 rounded-full"></div>
+                <div class="mt-12 animate-bounce">
+                    <a href="#ranks-overview" class="text-white/70 hover:text-white">
+                        <i class="fas fa-chevron-down text-2xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Ranks Overview -->
+    <section id="ranks-overview" class="py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
+                <!-- Ork Rank -->
+                <div class="rank-badge bg-gradient-to-b from-gray-900 to-gray-950 rounded-xl border border-gray-700/50 overflow-hidden shadow-xl group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="h-16 bg-gradient-to-r from-green-900/60 to-green-700/60 flex items-center justify-center">
+                        <div class="w-20 h-20 rounded-full bg-green-900 border-4 border-green-700 flex items-center justify-center transform -translate-y-2 group-hover:-translate-y-4 transition-all">
+                            <i class="fas fa-skull text-3xl text-green-400"></i>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-8 text-center">
+                        <h3 class="cinzel text-2xl font-bold text-green-400 mb-2">Ork</h3>
+                        <p class="text-gray-400 text-sm mb-4">Basic rank with essential permissions</p>
+                        <div class="mb-4">
+                            <span class="text-2xl font-bold text-green-400">Rp. 50.000</span>
+                            <span class="text-gray-400 text-sm">/lifetime</span>
+                        </div>
+                        <a href="payment.html?rank=ork" class="block w-full py-2 bg-green-800/60 hover:bg-green-700/60 border border-green-600/30 rounded-md transition-colors text-white font-medium">
+                            Purchase Now
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Wrath Rank -->
+                <div class="rank-badge bg-gradient-to-b from-gray-900 to-gray-950 rounded-xl border border-gray-700/50 overflow-hidden shadow-xl group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="h-16 bg-gradient-to-r from-blue-900/60 to-blue-700/60 flex items-center justify-center">
+                        <div class="w-20 h-20 rounded-full bg-blue-900 border-4 border-blue-700 flex items-center justify-center transform -translate-y-2 group-hover:-translate-y-4 transition-all">
+                            <i class="fas fa-bolt text-3xl text-blue-400"></i>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-8 text-center">
+                        <h3 class="cinzel text-2xl font-bold text-blue-400 mb-2">Wrath</h3>
+                        <p class="text-gray-400 text-sm mb-4">Improved abilities and more commands</p>
+                        <div class="mb-4">
+                            <span class="text-2xl font-bold text-blue-400">Rp. 150.000</span>
+                            <span class="text-gray-400 text-sm">/lifetime</span>
+                        </div>
+                        <a href="payment.html?rank=wrath" class="block w-full py-2 bg-blue-800/60 hover:bg-blue-700/60 border border-blue-600/30 rounded-md transition-colors text-white font-medium">
+                            Purchase Now
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Soul Rank -->
+                <div class="rank-badge bg-gradient-to-b from-gray-900 to-gray-950 rounded-xl border border-gray-700/50 overflow-hidden shadow-xl group" data-aos="fade-up" data-aos-delay="300">
+                    <div class="h-16 bg-gradient-to-r from-purple-900/60 to-purple-700/60 flex items-center justify-center">
+                        <div class="w-20 h-20 rounded-full bg-purple-900 border-4 border-purple-700 flex items-center justify-center transform -translate-y-2 group-hover:-translate-y-4 transition-all">
+                            <i class="fas fa-ghost text-3xl text-purple-400"></i>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-8 text-center">
+                        <h3 class="cinzel text-2xl font-bold text-purple-400 mb-2">Soul</h3>
+                        <p class="text-gray-400 text-sm mb-4">Unlock special abilities and perks</p>
+                        <div class="mb-4">
+                            <span class="text-2xl font-bold text-purple-400">Rp. 200.000</span>
+                            <span class="text-gray-400 text-sm">/lifetime</span>
+                        </div>
+                        <a href="payment.html?rank=soul" class="block w-full py-2 bg-purple-800/60 hover:bg-purple-700/60 border border-purple-600/30 rounded-md transition-colors text-white font-medium">
+                            Purchase Now
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Atomic Rank -->
+                <div class="rank-badge bg-gradient-to-b from-gray-900 to-gray-950 rounded-xl border border-gray-700/50 overflow-hidden shadow-xl group" data-aos="fade-up" data-aos-delay="400">
+                    <div class="h-16 bg-gradient-to-r from-yellow-900/60 to-yellow-600/60 flex items-center justify-center">
+                        <div class="w-20 h-20 rounded-full bg-yellow-800 border-4 border-yellow-600 flex items-center justify-center transform -translate-y-2 group-hover:-translate-y-4 transition-all">
+                            <i class="fas fa-atom text-3xl text-yellow-400"></i>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-8 text-center">
+                        <h3 class="cinzel text-2xl font-bold text-yellow-400 mb-2">Atomic</h3>
+                        <p class="text-gray-400 text-sm mb-4">Advanced powers and premium features</p>
+                        <div class="mb-4">
+                            <span class="text-2xl font-bold text-yellow-400">Rp. 300.000</span>
+                            <span class="text-gray-400 text-sm">/lifetime</span>
+                        </div>
+                        <a href="payment.html?rank=atomic" class="block w-full py-2 bg-yellow-800/60 hover:bg-yellow-700/60 border border-yellow-600/30 rounded-md transition-colors text-white font-medium">
+                            Purchase Now
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Devil Rank -->
+                <div class="rank-badge bg-gradient-to-b from-gray-900 to-gray-950 rounded-xl border border-gray-700/50 overflow-hidden shadow-xl group" data-aos="fade-up" data-aos-delay="500">
+                    <div class="h-16 bg-gradient-to-r from-red-900/60 to-red-700/60 flex items-center justify-center">
+                        <div class="w-20 h-20 rounded-full bg-red-900 border-4 border-red-700 flex items-center justify-center transform -translate-y-2 group-hover:-translate-y-4 transition-all">
+                            <i class="fas fa-fire text-3xl text-red-400"></i>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-8 text-center">
+                        <h3 class="cinzel text-2xl font-bold text-red-400 mb-2">Devil</h3>
+                        <p class="text-gray-400 text-sm mb-4">Elite rank with exclusive abilities</p>
+                        <div class="mb-4">
+                            <span class="text-2xl font-bold text-red-400">Rp. 600.000</span>
+                            <span class="text-gray-400 text-sm">/lifetime</span>
+                        </div>
+                        <a href="payment.html?rank=devil" class="block w-full py-2 bg-red-800/60 hover:bg-red-700/60 border border-red-600/30 rounded-md transition-colors text-white font-medium">
+                            Purchase Now
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Demon Rank -->
+                <div class="rank-badge bg-gradient-to-b from-gray-900 to-gray-950 rounded-xl border border-amber-700/50 overflow-hidden shadow-xl group" data-aos="fade-up" data-aos-delay="600">
+                    <div class="relative h-16 bg-gradient-to-r from-amber-900/60 to-amber-600/60 flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 opacity-20">
+                            <div class="absolute inset-0 animate-pulse bg-amber-500/20"></div>
+                        </div>
+                        <div class="w-20 h-20 rounded-full bg-amber-800 border-4 border-amber-600 flex items-center justify-center transform -translate-y-2 group-hover:-translate-y-4 transition-all relative">
+                            <i class="fas fa-crown text-3xl text-amber-400"></i>
+                            <div class="absolute inset-0 rounded-full animate-spin-slow opacity-70 bg-gradient-to-r from-transparent via-amber-500/20 to-transparent"></div>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-8 text-center">
+                        <div class="absolute -right-10 -top-10 w-24 h-24 bg-orange-600 rotate-12 opacity-80">
+                            <span class="absolute bottom-1 left-1 text-xs font-bold">BEST VALUE</span>
+                        </div>
+                        <h3 class="cinzel text-2xl font-bold text-amber-400 mb-2">Demon</h3>
+                        <p class="text-gray-400 text-sm mb-4">Ultimate power and all privileges</p>
+                        <div class="mb-4">
+                            <span class="text-2xl font-bold text-amber-400">Rp. 800.000</span>
+                            <span class="text-gray-400 text-sm">/lifetime</span>
+                        </div>
+                        <a href="payment.html?rank=demon" class="block w-full py-2 bg-gradient-to-r from-amber-700/80 to-amber-600/80 hover:from-amber-600/80 hover:to-amber-500/80 border border-amber-500/30 rounded-md transition-colors text-white font-bold">
+                            Purchase Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Rank Comparison -->
+    <section class="py-12 bg-black/60">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12" data-aos="fade-up">
+                <h2 class="cinzel text-3xl md:text-4xl font-bold mb-4">Rank <span class="text-red-600">Comparison</span></h2>
+                <p class="text-gray-300 max-w-3xl mx-auto">Compare the benefits of each rank to find the one that suits your playstyle</p>
+            </div>
+            
+            <div class="overflow-x-auto" data-aos="fade-up" data-aos-delay="200">
+                <table class="w-full min-w-max bg-black/40 border-collapse">
+                    <thead>
+                        <tr>
+                            <th class="p-4 text-left border-b border-gray-800 text-gray-400 font-medium">Features</th>
+                            <th class="p-4 text-center border-b border-gray-800">
+                                <span class="text-green-400 font-bold block">Ork</span>
+                                <span class="text-gray-400 text-sm">Rp. 50.000</span>
+                            </th>
+                            <th class="p-4 text-center border-b border-gray-800">
+                                <span class="text-blue-400 font-bold block">Wrath</span>
+                                <span class="text-gray-400 text-sm">Rp. 150.000</span>
+                            </th>
+                            <th class="p-4 text-center border-b border-gray-800">
+                                <span class="text-purple-400 font-bold block">Soul</span>
+                                <span class="text-gray-400 text-sm">Rp. 300.000</span>
+                            </th>
+                            <th class="p-4 text-center border-b border-gray-800">
+                                <span class="text-yellow-400 font-bold block">Atomic</span>
+                                <span class="text-gray-400 text-sm">Rp. 500.000</span>
+                            </th>
+                            <th class="p-4 text-center border-b border-gray-800">
+                                <span class="text-red-400 font-bold block">Devil</span>
+                                <span class="text-gray-400 text-sm">Rp. 600.000</span>
+                            </th>
+                            <th class="p-4 text-center border-b border-gray-800">
+                                <span class="text-amber-400 font-bold block">Demon</span>
+                                <span class="text-gray-400 text-sm">Rp. 800.000</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="hover:bg-gray-900/50 transition-colors">
+                            <td class="p-4 border-b border-gray-800 text-gray-300">Colored Name</td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-check text-green-500"></i></td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-check text-green-500"></i></td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-check text-green-500"></i></td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-check text-green-500"></i></td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-check text-green-500"></i></td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-check text-green-500"></i></td>
+                        </tr>
+                        <tr class="hover:bg-gray-900/50 transition-colors">
+                            <td class="p-4 border-b border-gray-800 text-gray-300">Home Commands</td>
+                            <td class="p-4 text-center border-b border-gray-800"><span class="text-gray-400">1</span></td>
+                            <td class="p-4 text-center border-b border-gray-800"><span class="text-gray-400">2</span></td>
+                            <td class="p-4 text-center border-b border-gray-800"><span class="text-gray-400">3</span></td>
+                            <td class="p-4 text-center border-b border-gray-800"><span class="text-gray-400">5</span></td>
+                            <td class="p-4 text-center border-b border-gray-800"><span class="text-gray-400">7</span></td>
+                            <td class="p-4 text-center border-b border-gray-800"><span class="text-gray-400">10</span></td>
+                        </tr>
+                        <tr class="hover:bg-gray-900/50 transition-colors">
+                            <td class="p-4 border-b border-gray-800 text-gray-300">Custom Chat Format</td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-times text-red-500"></i></td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-check text-green-500"></i></td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-check text-green-500"></i></td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-check text-green-500"></i></td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-check text-green-500"></i></td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-check text-green-500"></i></td>
+                        </tr>
+                        <tr class="hover:bg-gray-900/50 transition-colors">
+                            <td class="p-4 border-b border-gray-800 text-gray-300">Daily Sins Bonus</td>
+                            <td class="p-4 text-center border-b border-gray-800"><span class="text-gray-400">100</span></td>
+                            <td class="p-4 text-center border-b border-gray-800"><span class="text-gray-400">250</span></td>
+                            <td class="p-4 text-center border-b border-gray-800"><span class="text-gray-400">500</span></td>
+                            <td class="p-4 text-center border-b border-gray-800"><span class="text-gray-400">1,000</span></td>
+                            <td class="p-4 text-center border-b border-gray-800"><span class="text-gray-400">2,500</span></td>
+                            <td class="p-4 text-center border-b border-gray-800"><span class="text-gray-400">5,000</span></td>
+                        </tr>
+                        <tr class="hover:bg-gray-900/50 transition-colors">
+                            <td class="p-4 border-b border-gray-800 text-gray-300">Keep Inventory on Death</td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-times text-red-500"></i></td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-times text-red-500"></i></td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-check text-green-500"></i></td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-check text-green-500"></i></td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-check text-green-500"></i></td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-check text-green-500"></i></td>
+                        </tr>
+                        <tr class="hover:bg-gray-900/50 transition-colors">
+                            <td class="p-4 border-b border-gray-800 text-gray-300">Access to Fly Command</td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-times text-red-500"></i></td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-times text-red-500"></i></td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-times text-red-500"></i></td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-check text-green-500"></i></td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-check text-green-500"></i></td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-check text-green-500"></i></td>
+                        </tr>
+                        <tr class="hover:bg-gray-900/50 transition-colors">
+                            <td class="p-4 border-b border-gray-800 text-gray-300">Enderchest Commands</td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-times text-red-500"></i></td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-times text-red-500"></i></td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-times text-red-500"></i></td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-check text-green-500"></i></td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-check text-green-500"></i></td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-check text-green-500"></i></td>
+                        </tr>
+                        <tr class="hover:bg-gray-900/50 transition-colors">
+                            <td class="p-4 border-b border-gray-800 text-gray-300">Monthly Crate Keys</td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-times text-red-500"></i></td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-times text-red-500"></i></td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-times text-red-500"></i></td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-times text-red-500"></i></td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-check text-green-500"></i></td>
+                            <td class="p-4 text-center border-b border-gray-800"><i class="fas fa-check text-green-500"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- AOS Animation Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+    <script>
+        // Initialize AOS animation
+        AOS.init({
+            once: true,
+            duration: 800,
+            easing: 'ease-out'
+        });
+
+        // Loading screen - fixed 1 second timeout
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                document.querySelector('.loader').classList.add('fade');
+            }, 1000);
+        });
+
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Scroll to top button
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.add('show');
+            } else {
+                scrollTopBtn.classList.remove('show');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>
+

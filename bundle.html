@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hells Dominion | Bundles</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary-color: #d81921;
+            --secondary-color: #860008;
+            --accent-color: #ff6600;
+            --dark-color: #1a0000;
+            --light-color: #fff1e6;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-color);
+            color: var(--light-color);
+        }
+
+        .cinzel {
+            font-family: 'Cinzel Decorative', cursive;
+        }
+
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: 2px solid var(--accent-color);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(255, 102, 0, 0.3);
+        }
+
+        .glow {
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #ff6600, 0 0 10px #ff6600, 0 0 15px rgba(0,0,0,0.8);
+            }
+            to {
+                text-shadow: 0 0 10px #ff6600, 0 0 20px #ff6600, 0 0 30px #ff6600, 0 0 15px rgba(0,0,0,0.8);
+            }
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://api/placeholder/1200/800');
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+        }
+        
+        .bundle-card {
+            transition: all 0.3s ease;
+        }
+        
+        .bundle-card:hover {
+            transform: translateY(-8px);
+        }
+        
+        .crate-shine {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%);
+            background-size: 200% 200%;
+            animation: shine 3s infinite linear;
+            z-index: 0; /* Add this line to ensure it doesn't block clickable elements */
+            pointer-events: none; /* Add this line to make it non-interactive */
+        }
+        
+        @keyframes shine {
+            0% {
+                background-position: 0% 0%;
+            }
+            100% {
+                background-position: 200% 200%;
+            }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .floating {
+            animation: float 3s infinite ease-in-out;
+        }
+        
+        .hover-scale {
+            transition: transform 0.3s ease;
+        }
+        
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+
+        /* Loading animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--dark-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loader.fade {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        .loader-icon {
+            width: 100px;
+            height: 100px;
+            border: 5px solid transparent;
+            border-top: 5px solid var(--primary-color);
+            border-right: 5px solid var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .btn-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 99;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-float.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .btn-float:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-5px);
+        }
+
+        .nav-glass {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            background-color: rgba(0, 0, 0, 0.7);
+            box-shadow: 0 4px 30px rgba(213, 25, 33, 0.1);
+            border-bottom: 1px solid rgba(255, 102, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .nav-scrolled {
+            background-color: rgba(0, 0, 0, 0.9);
+            box-shadow: 0 4px 30px rgba(213, 25, 33, 0.2);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-black via-red-950/10 to-black">
+    <!-- Loading Screen -->
+    <div class="loader">
+        <div class="loader-content">
+            <div class="loader-icon"></div>
+            <h2 class="cinzel text-2xl text-red-600">Loading <span class="text-amber-500">Hells Dominion</span></h2>
+        </div>
+    </div>
+
+    <!-- Scroll to top button -->
+    <div class="btn-float" id="scrollTop">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav-glass fixed w-full z-50" id="mainNav">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="https://api/placeholder/50/50" alt="Hells Dominion Logo" class="w-12 h-12 mr-3">
+                <a href="index.html" class="cinzel text-2xl md:text-3xl font-bold text-red-600">Hells <span class="text-amber-500">Dominion</span></a>
+            </div>
+            
+            <!-- Mobile menu button -->
+            <button id="menu-toggle" class="md:hidden text-white focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+            
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="nav-link text-white hover:text-red-500 font-medium">Home</a>
+                <a href="ranks.html" class="nav-link text-white hover:text-red-500 font-medium">Ranks</a>
+                <a href="bundle.html" class="nav-link text-red-500 font-medium">Bundles</a>
+                <a href="payment.html" class="nav-link text-white hover:text-red-500 font-medium">Payment</a>
+                <a href="https://discord.gg/" target="_blank" class="flex items-center space-x-2 bg-indigo-700 hover:bg-indigo-600 px-4 py-2 rounded-lg transition-all">
+                    <i class="fab fa-discord"></i>
+                    <span>Join Discord</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-black/90 backdrop-blur-md w-full">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-4">
+                <a href="index.html" class="text-white hover:text-red-500 font-medium py-2 border-b border-gray-800">Home</a>
+                <a href="ranks.html" class="text-white hover:text-red-500 font-medium py-2 border-b border-gray-800">Ranks</a>
+                <a href="bundle.html" class="text-red-500 font-medium py-2 border-b border-gray-800">Bundles</a>
+                <a href="payment.html" class="text-white hover:text-red-500 font-medium py-2 border-b border-gray-800">Payment</a>
+                <a href="https://discord.gg/" target="_blank" class="flex items-center justify-center space-x-2 bg-indigo-700 hover:bg-indigo-600 px-4 py-2 rounded-lg transition-all">
+                    <i class="fab fa-discord"></i>
+                    <span>Join Discord</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="pt-24 pb-12 md:pt-32 md:pb-16 relative">
+        <div class="hero-background opacity-30"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/50 to-black/90 z-0"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="flex flex-col items-center text-center" data-aos="fade-up">
+                <h1 class="cinzel text-4xl md:text-5xl lg:text-6xl font-bold mb-4 glow">
+                    Infernal <span class="text-red-600 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">Bundles</span>
+                </h1>
+                <p class="text-xl max-w-3xl mb-4">Unlock exclusive rewards and perks with our premium bundles.</p>
+                <div class="w-24 h-1 bg-gradient-to-r from-red-700 to-amber-500 rounded-full"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Crate Keys Section -->
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-10" data-aos="fade-up">
+                <h2 class="cinzel text-3xl md:text-4xl font-bold mb-3">Crate <span class="text-red-600">Keys</span></h2>
+                <p class="text-gray-300 max-w-3xl mx-auto">Open infernal crates containing powerful items, cosmetics, and more</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Satan Crate Key -->
+                <div class="bundle-card bg-gradient-to-b from-red-900/30 to-black/60 rounded-xl overflow-hidden shadow-lg border border-red-800/30 p-6 relative" data-aos="fade-up" data-aos-delay="100">
+                    <div class="absolute top-0 right-0 bg-red-600 text-xs font-bold py-1 px-3 rounded-bl-lg">TOP SELLER</div>
+                    <div class="crate-shine"></div>
+                    <div class="flex justify-center mb-4">
+                        <div class="w-28 h-28 bg-gradient-to-b from-red-800/80 to-red-950/80 rounded-xl border-2 border-red-700/50 flex items-center justify-center relative overflow-hidden">
+                            <i class="fas fa-key text-5xl text-red-400 floating"></i>
+                        </div>
+                    </div>
+                    <h3 class="cinzel text-2xl font-bold text-center text-red-400 mb-2">Satan Crate</h3>
+                    <p class="text-gray-400 text-sm text-center mb-4">Unlock the most diabolical items in the server</p>
+                    <div class="space-y-2 mb-6">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-red-500 mr-2"></i>
+                            <span class="text-gray-300 text-sm">Legendary weapons & armor</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-red-500 mr-2"></i>
+                            <span class="text-gray-300 text-sm">Unique cosmetic effects</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-red-500 mr-2"></i>
+                            <span class="text-gray-300 text-sm">Special server perks</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-red-500 mr-2"></i>
+                            <span class="text-gray-300 text-sm">10% chance of rare item</span>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-amber-400 text-2xl font-bold mb-3">Rp. 150.000</div>
+                        <a href="payment.html?bundle=satan-crate" class="block w-full bg-gradient-to-r from-red-700 to-red-600 hover:from-red-600 hover:to-red-500 text-white font-bold py-2 px-4 rounded-md transition-colors">
+                            Purchase Key
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Leviathan Crate Key -->
+                <div class="bundle-card bg-gradient-to-b from-blue-900/30 to-black/60 rounded-xl overflow-hidden shadow-lg border border-blue-800/30 p-6 relative" data-aos="fade-up" data-aos-delay="200">
+                    <div class="crate-shine"></div>
+                    <div class="flex justify-center mb-4">
+                        <div class="w-28 h-28 bg-gradient-to-b from-blue-800/80 to-blue-950/80 rounded-xl border-2 border-blue-700/50 flex items-center justify-center relative overflow-hidden">
+                            <i class="fas fa-key text-5xl text-blue-400 floating"></i>
+                        </div>
+                    </div>
+                    <h3 class="cinzel text-2xl font-bold text-center text-blue-400 mb-2">Leviathan Crate</h3>
+                    <p class="text-gray-400 text-sm text-center mb-4">Unleash the power of the deep abyss</p>
+                    <div class="space-y-2 mb-6">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-blue-500 mr-2"></i>
+                            <span class="text-gray-300 text-sm">Powerful enchantments</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-blue-500 mr-2"></i>
+                            <span class="text-gray-300 text-sm">Rare water-based items</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-blue-500 mr-2"></i>
+                            <span class="text-gray-300 text-sm">Ocean-themed cosmetics</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-blue-500 mr-2"></i>
+                            <span class="text-gray-300 text-sm">5% chance of mythic item</span>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-amber-400 text-2xl font-bold mb-3">Rp. 150.000</div>
+                        <a href="payment.html?bundle=leviathan-crate" class="block w-full bg-gradient-to-r from-blue-700 to-blue-600 hover:from-blue-600 hover:to-blue-500 text-white font-bold py-2 px-4 rounded-md transition-colors">
+                            Purchase Key
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Light Crate Key -->
+                <div class="bundle-card bg-gradient-to-b from-yellow-900/30 to-black/60 rounded-xl overflow-hidden shadow-lg border border-yellow-800/30 p-6 relative" data-aos="fade-up" data-aos-delay="300">
+                    <div class="absolute top-0 right-0 bg-yellow-600 text-xs font-bold py-1 px-3 rounded-bl-lg">BEST FOR BEGINNERS</div>
+                    <div class="crate-shine"></div>
+                    <div class="flex justify-center mb-4">
+                        <div class="w-28 h-28 bg-gradient-to-b from-yellow-700/80 to-yellow-900/80 rounded-xl border-2 border-yellow-600/50 flex items-center justify-center relative overflow-hidden">
+                            <i class="fas fa-key text-5xl text-yellow-400 floating"></i>
+                        </div>
+                    </div>
+                    <h3 class="cinzel text-2xl font-bold text-center text-yellow-400 mb-2">Light Crate</h3>
+                    <p class="text-gray-400 text-sm text-center mb-4">Essential rewards for all players</p>
+                    <div class="space-y-2 mb-6">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-yellow-500 mr-2"></i>
+                            <span class="text-gray-300 text-sm">Basic equipment & tools</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-yellow-500 mr-2"></i>
+                            <span class="text-gray-300 text-sm">Common enchantments</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-yellow-500 mr-2"></i>
+                            <span class="text-gray-300 text-sm">Small Sins bundles</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-yellow-500 mr-2"></i>
+                            <span class="text-gray-300 text-sm">2% chance of rare item</span>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-amber-400 text-2xl font-bold mb-3">Rp. 50.000</div>
+                        <a href="payment.html?bundle=light-crate" class="block w-full bg-gradient-to-r from-yellow-700 to-yellow-600 hover:from-yellow-600 hover:to-yellow-500 text-white font-bold py-2 px-4 rounded-md transition-colors">
+                            Purchase Key
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Lucifer Crate Key -->
+                <div class="bundle-card bg-gradient-to-b from-purple-900/30 to-black/60 rounded-xl overflow-hidden shadow-lg border border-purple-800/30 p-6 relative" data-aos="fade-up" data-aos-delay="400">
+                    <div class="absolute top-0 right-0 bg-purple-600 text-xs font-bold py-1 px-3 rounded-bl-lg">PREMIUM</div>
+                    <div class="crate-shine"></div>
+                    <div class="flex justify-center mb-4">
+                        <div class="w-28 h-28 bg-gradient-to-b from-purple-800/80 to-purple-950/80 rounded-xl border-2 border-purple-700/50 flex items-center justify-center relative overflow-hidden">
+                            <i class="fas fa-key text-5xl text-purple-400 floating"></i>
+                        </div>
+                    </div>
+                    <h3 class="cinzel text-2xl font-bold text-center text-purple-400 mb-2">Lucifer Crate</h3>
+                    <p class="text-gray-400 text-sm text-center mb-4">The most prestigious rewards available</p>
+                    <div class="space-y-2 mb-6">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-purple-500 mr-2"></i>
+                            <span class="text-gray-300 text-sm">Mythic weapons & armor</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-purple-500 mr-2"></i>
+                            <span class="text-gray-300 text-sm">Exclusive pet companions</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-purple-500 mr-2"></i>
+                            <span class="text-gray-300 text-sm">Legendary cosmetic effects</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-purple-500 mr-2"></i>
+                            <span class="text-gray-300 text-sm">15% chance of mythic item</span>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-amber-400 text-2xl font-bold mb-3">Rp. 250.000</div>
+                        <a href="payment.html?bundle=lucifer-crate" class="block w-full bg-gradient-to-r from-purple-700 to-purple-600 hover:from-purple-600 hover:to-purple-500 text-white font-bold py-2 px-4 rounded-md transition-colors">
+                            Purchase Key
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sins Currency Section -->
+    <section class="py-12 bg-black/60">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-10" data-aos="fade-up">
+                <h2 class="cinzel text-3xl md:text-4xl font-bold mb-3">Sins <span class="text-red-600">Currency</span></h2>
+                <p class="text-gray-300 max-w-3xl mx-auto">The official currency of Hells Dominion. Use Sins to purchase items, upgrades, and more.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Small Sins Bundle -->
+                <div class="bundle-card bg-gradient-to-b from-gray-900/50 to-black/70 rounded-xl overflow-hidden shadow-lg border border-gray-700/30 p-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex justify-center mb-4">
+                        <div class="w-20 h-20 bg-gradient-to-r from-amber-600/80 to-amber-800/80 rounded-full flex items-center justify-center">
+                            <i class="fas fa-coins text-3xl text-amber-300"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-center text-amber-400 mb-1">Small Sins Bundle</h3>
+                    <div class="text-center mb-4">
+                        <span class="text-2xl font-bold text-white">1,000</span>
+                        <span class="text-gray-300"> Sins</span>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-amber-400 text-xl font-bold mb-3">Rp. 50.000</div>
+                        <a href="payment.html?bundle=small-sins" class="block w-full bg-gray-800 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-md transition-colors">
+                            Purchase Now
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Medium Sins Bundle -->
+                <div class="bundle-card bg-gradient-to-b from-gray-900/50 to-black/70 rounded-xl overflow-hidden shadow-lg border border-gray-700/30 p-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex justify-center mb-4">
+                        <div class="w-20 h-20 bg-gradient-to-r from-amber-600/80 to-amber-800/80 rounded-full flex items-center justify-center">
+                            <i class="fas fa-coins text-3xl text-amber-300"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-center text-amber-400 mb-1">Medium Sins Bundle</h3>
+                    <div class="text-center mb-4">
+                        <span class="text-2xl font-bold text-white">5,000</span>
+                        <span class="text-gray-300"> Sins</span>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-amber-400 text-xl font-bold mb-3">Rp. 100.000</div>
+                        <a href="payment.html?bundle=medium-sins" class="block w-full bg-gray-800 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-md transition-colors">
+                            Purchase Now
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Large Sins Bundle -->
+                <div class="bundle-card bg-gradient-to-b from-gray-900/50 to-black/70 rounded-xl overflow-hidden shadow-lg border border-gray-700/30 p-6 relative" data-aos="fade-up" data-aos-delay="300">
+                    <div class="absolute top-0 right-0 bg-amber-600 text-xs font-bold py-1 px-3 rounded-bl-lg">BEST VALUE</div>
+                    <div class="flex justify-center mb-4">
+                        <div class="w-20 h-20 bg-gradient-to-r from-amber-600/80 to-amber-800/80 rounded-full flex items-center justify-center">
+                            <i class="fas fa-coins text-3xl text-amber-300"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-center text-amber-400 mb-1">Large Sins Bundle</h3>
+                    <div class="text-center mb-4">
+                        <span class="text-2xl font-bold text-white">15,000</span>
+                        <span class="text-gray-300"> Sins</span>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-amber-400 text-xl font-bold mb-3">Rp. 250.000</div>
+                        <a href="payment.html?bundle=large-sins" class="block w-full bg-gray-800 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-md transition-colors">
+                            Purchase Now
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Massive Sins Bundle -->
+                <div class="bundle-card bg-gradient-to-b from-gray-900/50 to-black/70 rounded-xl overflow-hidden shadow-lg border border-gray-700/30 p-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="flex justify-center mb-4">
+                        <div class="w-20 h-20 bg-gradient-to-r from-amber-600/80 to-amber-800/80 rounded-full flex items-center justify-center">
+                            <i class="fas fa-coins text-3xl text-amber-300"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-center text-amber-400 mb-1">Massive Sins Bundle</h3>
+                    <div class="text-center mb-4">
+                        <span class="text-2xl font-bold text-white">50,000</span>
+                        <span class="text-gray-300"> Sins</span>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-amber-400 text-xl font-bold mb-3">Rp. 600.000</div>
+                        <a href="payment.html?bundle=massive-sins" class="block w-full bg-gray-800 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-md transition-colors">
+                            Purchase Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Battlepass Section -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-10" data-aos="fade-up">
+                <h2 class="cinzel text-3xl md:text-4xl font-bold mb-3">Abyss <span class="text-red-600">Battlepass</span></h2>
+                <p class="text-gray-300 max-w-3xl mx-auto">Earn exclusive rewards as you progress through 100 tiers of infernal challenges</p>
+            </div>
+            
+            <div class="max-w-5xl mx-auto bg-gradient-to-br from-red-900/20 to-black/40 p-8 rounded-xl border border-red-800/30 backdrop-blur-sm" data-aos="fade-up">
+                <div class="flex flex-col lg:flex-row gap-8">
+                    <div class="lg:w-1/3">
+                        <div class="relative">
+                            <div class="w-full aspect-square rounded-xl bg-gradient-to-b from-red-800/30 to-black/60 border border-red-700/50 overflow-hidden relative">
+                                <img src="https://api/placeholder/400/400" alt="Abyss Battlepass" class="w-full h-full object-cover opacity-60">
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <div class="text-center p-4">
+                                        <h3 class="cinzel text-3xl font-bold text-red-400 glow mb-2">ABYSS</h3>
+                                        <p class="text-xl font-bold text-white mb-1">SEASON III</p>
+                                        <p class="text-sm text-gray-300">90 days remaining</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 text-center">
+                                <div class="flex items-center justify-center gap-3 mb-4">
+                                    <div class="bg-gray-800/80 py-1 px-3 rounded-full text-sm">
+                                        <i class="fas fa-trophy text-yellow-400 mr-1"></i>
+                                        <span>100 Tiers</span>
+                                    </div>
+                                    <div class="bg-gray-800/80 py-1 px-3 rounded-full text-sm">
+                                        <i class="fas fa-calendar text-blue-400 mr-1"></i>
+                                        <span>Season 3</span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-center gap-4 mb-4">
+                                    <div>
+                                        <p class="text-sm text-gray-400">Standard</p>
+                                        <p class="text-xl font-bold text-amber-400">Rp. 200.000</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-400">Premium</p>
+                                        <p class="text-xl font-bold text-amber-400">Rp. 300.000</p>
+                                    </div>
+                                </div>
+                                <a href="payment.html?bundle=battlepass" class="block w-full bg-gradient-to-r from-red-700 to-red-600 hover:from-red-600 hover:to-red-500 text-white font-bold py-2 px-4 rounded-md transition-colors">
+                                    Purchase Battlepass
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="lg:w-2/3">
+                        <h3 class="cinzel text-2xl font-bold mb-4 text-red-500">Season III Rewards</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-black/40 p-4 rounded-lg border border-red-900/30">
+                                <h4 class="font-bold mb-2">Premium Rewards</h4>
+                                <ul class="space-y-2">
+                                    <li class="flex items-center">
+                                        <i class="fas fa-fire text-red-500 mr-2"></i>
+                                        <span>Exclusive Demon Wings cosmetic</span>
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-fire text-red-500 mr-2"></i>
+                                        <span>Legendary Hellfire Sword</span>
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-fire text-red-500 mr-2"></i>
+                                        <span>"Satan's Chosen" title</span>
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-fire text-red-500 mr-2"></i>
+                                        <span>50,000 Sins currency</span>
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-fire text-red-500 mr-2"></i>
+                                        <span>3x Lucifer Crate Keys</span>
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-fire text-red-500 mr-2"></i>
+                                        <span>Special server perks for 30 days</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-black/40 p-4 rounded-lg border border-red-900/30">
+                                <h4 class="font-bold mb-2">Standard Rewards</h4>
+                                <ul class="space-y-2">
+                                    <li class="flex items-center">
+                                        <i class="fas fa-fire text-amber-500 mr-2"></i>
+                                        <span>Basic Demon Wings cosmetic</span>
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-fire text-amber-500 mr-2"></i>
+                                        <span>Epic Inferno Sword</span>
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-fire text-amber-500 mr-2"></i>
+                                        <span>"Hell Walker" title</span>
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-fire text-amber-500 mr-2"></i>
+                                        <span>20,000 Sins currency</span>
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-fire text-amber-500 mr-2"></i>
+                                        <span>1x Lucifer Crate Key</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- <div class="mt-6 bg-gradient-to-r from-red-900/30 to-black/40 p-4 rounded-lg border border-red-700/30">
+                            <h4 class="font-bold mb-2">Battlepass Progression</h4>
+                            <div class="w-full bg-gray-800 rounded-full h-4 mb-2">
+                                <div class="bg-gradient-to-r from-red-600 to-amber-500 h-4 rounded-full" style="width: 35%"></div>
+                            </div>
+                            <div class="flex justify-between text-sm text-gray-400">
+                                <span>Tier 0</span>
+                                <span>Tier 35/100</span>
+                                <span>Tier 100</span>
+                            </div>
+                            
+                            <div class="mt-4 grid grid-cols-5 gap-2">
+                                <div class="bg-black/40 p-2 rounded text-center border border-red-800/30 hover:border-red-600 cursor-pointer hover-scale">
+                                    <span class="text-sm">Tier 31</span>
+                                    <div class="w-8 h-8 mx-auto flex items-center justify-center">
+                                        <i class="fas fa-gem text-amber-400"></i>
+                                    </div>
+                                </div>
+                                <div class="bg-black/40 p-2 rounded text-center border border-red-800/30 hover:border-red-600 cursor-pointer hover-scale">
+                                    <span class="text-sm">Tier 32</span>
+                                    <div class="w-8 h-8 mx-auto flex items-center justify-center">
+                                        <i class="fas fa-coins text-amber-400"></i>
+                                    </div>
+                                </div>
+                                <div class="bg-black/40 p-2 rounded text-center border border-red-800/30 hover:border-red-600 cursor-pointer hover-scale">
+                                    <span class="text-sm">Tier 33</span>
+                                    <div class="w-8 h-8 mx-auto flex items-center justify-center">
+                                        <i class="fas fa-tshirt text-purple-400"></i>
+                                    </div>
+                                </div>
+                                <div class="bg-black/40 p-2 rounded text-center border border-red-800/30 hover:border-red-600 cursor-pointer hover-scale">
+                                    <span class="text-sm">Tier 34</span>
+                                    <div class="w-8 h-8 mx-auto flex items-center justify-center">
+                                        <i class="fas fa-key text-amber-400"></i>
+                                    </div>
+                                </div>
+                                <div class="bg-black/40 p-2 rounded text-center border border-red-800/30 hover:border-red-600 cursor-pointer hover-scale">
+                                    <span class="text-sm">Tier 35</span>
+                                    <div class="w-8 h-8 mx-auto flex items-center justify-center">
+                                        <i class="fas fa-sword text-red-400"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AOS Animation Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+    <script>
+        // Initialize AOS animation
+        AOS.init({
+            once: true,
+            duration: 800,
+            easing: 'ease-out'
+        });
+
+        // Loading screen - fixed 1 second timeout
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                document.querySelector('.loader').classList.add('fade');
+            }, 1000);
+        });
+
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Navbar scroll effect
+        const nav = document.getElementById('mainNav');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 100) {
+                nav.classList.add('nav-scrolled');
+            } else {
+                nav.classList.remove('nav-scrolled');
+            }
+        });
+
+        // Scroll to top button
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.add('show');
+            } else {
+                scrollTopBtn.classList.remove('show');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>
+``` 
